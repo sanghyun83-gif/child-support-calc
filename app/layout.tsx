@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     "parenting time calculator",
     "child support 2025",
   ],
+  verification: {
+    google: "qlPMVO_Hb-be3_hFHNT9SBbsHO-b_wCOfWfLmTb4EQc",
+  },
   openGraph: {
     title: `Free Child Support Calculator ${SITE.year}`,
     description: "Calculate child support payments for all 50 US states based on official guidelines.",
