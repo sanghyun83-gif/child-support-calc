@@ -14,7 +14,7 @@ export const SITE = {
     tagline: "Free 2025 Calculator",
     description: "Calculate child support payments for all 50 US states. Free 2025 calculator based on official state guidelines, income shares, and custody arrangements.",
     year: 2025,
-    baseUrl: "https://child-support-calc.vercel.app",
+    baseUrl: "https://child-support.mysmartcalculators.com",
 };
 
 // ============================================
@@ -194,22 +194,22 @@ export function calculateChildSupport(
     payorCustodyPercent: number = 20
 ): ChildSupportResult {
     const state = STATE_DATA[stateCode] || STATE_DATA['CA'];
-    
+
     // Get base percentage based on number of children
     let basePercent = state.basePercent.one;
     if (numberOfChildren === 2) basePercent = state.basePercent.two;
     if (numberOfChildren >= 3) basePercent = state.basePercent.three;
-    
+
     // Calculate combined monthly income
     const combinedIncome = payorMonthlyIncome + recipientMonthlyIncome;
-    
+
     // Base obligation (combined income × percentage)
     const baseObligation = Math.round(combinedIncome * basePercent);
-    
+
     // Payor's share based on income proportion
     const payorIncomeShare = payorMonthlyIncome / combinedIncome;
     const payorShare = Math.round(baseObligation * payorIncomeShare);
-    
+
     // Custody adjustment (more custody = less support)
     // If payor has 50% custody, support is reduced significantly
     let custodyMultiplier = 1;
@@ -220,10 +220,10 @@ export function calculateChildSupport(
     } else if (payorCustodyPercent >= 20) {
         custodyMultiplier = 0.85;
     }
-    
+
     const custodyAdjustment = Math.round(payorShare * (1 - custodyMultiplier));
     const monthlySupport = Math.max(state.minOrderMonthly, payorShare - custodyAdjustment);
-    
+
     return {
         state: stateCode,
         stateName: state.name,
